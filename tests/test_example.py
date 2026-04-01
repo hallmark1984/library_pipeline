@@ -5,7 +5,7 @@ Copy this pattern for your own tests!
 
 import pytest
 import pandas as pd
-
+ 
 @pytest.fixture
 def sample_df():
     """Sample DataFrame for testing."""

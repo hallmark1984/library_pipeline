@@ -24,6 +24,8 @@ def handle_missing_values(df, strategy='drop', fill_value=None, columns=None):
 def standardize_dates(df, date_columns, date_format='%Y-%m-%d'):
     """Standardize date columns to consistent format."""
     df = df.copy()
+    for c in date_columns:
+        df[c] = pd.to_datetime(df[c], format=date_format, errors='coerce').dt.strftime(date_format)
     return df
 
 

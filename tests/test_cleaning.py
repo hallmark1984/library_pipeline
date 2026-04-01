@@ -2,6 +2,8 @@
 import pytest
 import pandas as pd
 import os 
+import re
+
 os.chdir('..')
 from src.data_processing.cleaning import remove_duplicates, handle_missing_values, standardize_dates
 
@@ -11,7 +13,7 @@ def sample_df():
     return pd.DataFrame({
         'id': [1, 2, 3],
         'name': ['Alice', 'Bob', 'Charlie'],
-        'DOB' : ['20000123','1984-09-02','31-12-1999']
+        'DOB' : ['2000-01-23','1984-09-02','1999-12-31']
     })
 
 def test_remove_duplicates(sample_df):
@@ -26,5 +28,6 @@ def test_handle_missing_values(sample_df):
 
     
 def test_standardize_dates(sample_df):
-    df = standardize_dates(sample_df,date_columns='DOB')
-    assert 1==1
+    df = standardize_dates(sample_df,date_columns=['DOB'])
+    for x in df['DOB']:
+        assert re.match(r'^\d{4}-\d{2}-\d{2}$', x) 
